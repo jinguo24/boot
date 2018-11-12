@@ -1,0 +1,40 @@
+spring:
+  # JDBC
+  datasource:
+    url: jdbc:mysql://47.100.34.187:63306/${dbName}?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 1234qwer
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  jackson: 
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  # REDIS
+  redis:
+    host: 47.100.34.187
+    port: 6379
+    timeout: 0
+    expire: 1800 #30分钟
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+
+logging:
+  level:
+    tk.mybatis: debug
+    com.simple.mapper: debug

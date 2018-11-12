@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simple.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.simple.domain.po.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+  <select id="listAsPage" parameterType="com.simple.domain.po.UserInfo" resultMap="BaseResultMap">
+    SELECT *
+    FROM user_info
+    WHERE status = 1
+    <if test="username != '' and username != null">
+      AND (username LIKE CONCAT('%',#{username},'%') <!-- OR nickname LIKE CONCAT('%',#{nickname},'%') -->)
+    </if>
+  </select>
+
+  <select id="hasButtonPermission" resultType="java.lang.Integer">
+    SELECT 1
+    FROM sys_user_role ur, sys_role_permission rp, sys_permission p
+    WHERE rp.role_id = ur.role_id
+    AND rp.permission_id = p.id
+    AND p.resource_type = 1
+    AND ur.uid = #{userId}
+    AND p.permission = #{permission}
+  </select>
+  
+</mapper>

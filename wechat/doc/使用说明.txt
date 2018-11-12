@@ -1,0 +1,71 @@
+#该项目封装了微信的授权，支付，退款，分享，订单查询接口，支持微信浏览器支付和非微信浏览器支付
+
+WeChatInterface使用：针对全局token和jsticket进行处理接口
+#  全局token在调用微信的一些接口时需要用到
+#  jsticket在前端需要微信js鉴权的时候会用到，如分享，支付等页面               
+#  全局token和jsticket失效的时间为2小时，所以使用端需要定时的去刷新这两个值，防止失效
+#  刷新全局token方法：WeChat.refreshGloalToken  刷新jsticket:WeChat.refreshJsTicket
+#  使用方实现查询和存储的方式，建议redis存储,需要做定时任务去刷新这两个
+####################################################################################
+
+微信授权使用：WeChat.getAuthUrl
+#	如果项目仅仅只用授权，则WeChatInterface可为空[WeChat.getInstance(null)].
+#	第一步： controller调用WeChat.getAuthUrl得到授权url, redirect到该授权url.
+#	第二步： controller实现callBackUrl，调用WeChat.getUserInfo获取用户信息,静默授权只能获取到openId
+####################################################################################
+
+微信浏览器内WAP支付使用：WeChat.doWapInPay
+#   第一步: controller提供接口调用WeChat.doWapInPay
+#   第二步: H5页面发请求调用该接口，获取到相应信息，然后在页面加上如下代码
+			function onBridgeReady(){
+			   WeixinJSBridge.invoke(
+			       'getBrandWCPayRequest', {
+			           "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入     
+			           "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
+			           "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串     
+			           "package":"prepay_id=u802345jgfjsdfgsdg888",     
+			           "signType":"MD5",         //微信签名方式：     
+			           "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+			       },
+			       function(res){     
+			           if(res.err_msg == "get_brand_wcpay_request:ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+			       }
+			   ); 
+			}
+			if (typeof WeixinJSBridge == "undefined"){
+			   if( document.addEventListener ){
+			       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+			   }else if (document.attachEvent){
+			       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+			       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+			   }
+			}else{
+			   onBridgeReady();
+			}
+##########################################################################################################
+
+非微信浏览器WAP支付使用：WeChat.doWapOutPay
+#   第一步：controller调用WeChat.doWapOutPay得到跳转url, redirect 到该url
+#   第二步：前端不要发ajax请求来调用controller接口地址，采用超链接的方式
+#   第三步：如果支付之后想跳转到自定义的页面，则传redirectUrl
+########################################################################################################
+
+@link https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
+微信浏览器内分享：WeChat.getJsConfig
+#   第一步：controller调用WeChat.getJsConfig,返回信息
+#   第二步：H5页面调用该接口获取信息，然后调用微信js方法来鉴权，设置分享的图片，title等信息
+########################################################################################################
+
+微信支付成功之后，异步通知消息：WeChat.paySuccessNotice
+#   支付成功之后，微信会异步发送消息到notifyUrl,controller调用WeChat.paySuccessNotice实现该notifyUrl
+#   该接口不能支持任何参数，有可能一个订单会重复发送消息，OrderExcutor里面需要去做响应的处理
+#   只有接收到此消息才算真正的支付成功，微信页面返回的支付成功可能不准确,所以订单的处理在此处做
+########################################################################################################
+
+微信订单查询：WeChat.getOrderDetail
+
+微信退款：WeChat.refund
+
+微信退款结果通知：WeChat.getRefundInfo
+#   该接口不能支持任何参数,有可能会重复发送消息 
+########################################################################################################
