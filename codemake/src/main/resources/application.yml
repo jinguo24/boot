@@ -9,7 +9,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   # JDBC
   datasource:
-    url: jdbc:mysql://47.104.189.214:3306/hxy?characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://47.104.189.214:3306/shouhou?characterEncoding=UTF-8&useSSL=false
     username: root
     password: abc321@JG
     type: com.alibaba.druid.pool.DruidDataSource

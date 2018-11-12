@@ -29,7 +29,7 @@
 
     <modules>
         <module>base</module>
-        <module>user</module>
+        <!--<module>user</module>-->
         <!--<module>wechat</module>-->
         <!--<module>alipay-sdk-java20180104135026-source</module>-->
         <!--<module>ali</module>-->

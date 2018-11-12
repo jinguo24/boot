@@ -51,8 +51,8 @@ public class AppTest
 	{
 		try {
 			//项目目录名称
-			String project = "hxybaks";
-			String db = "hxy";
+			String project = "shouhou";
+			String db = "shouhou";
 			//生成项目文件,需要该db下有sys_permission，sys_role,sys_role_permission,sys_user_role,user_info
 			codeMake.makeProjectFile(project, db);
 			
