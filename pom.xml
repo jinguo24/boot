@@ -35,6 +35,7 @@
         <!--<module>ali</module>-->
         <module>freemarker</module>
         <module>codemake</module>
+        <!--<module>excel</module>-->
     </modules>
 
     <parent>
