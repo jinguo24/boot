@@ -18,7 +18,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.util.StringUtils;
 
-import com.lenovo.common.config.EnvPropertiesConfiger;
+import com.simple.config.EnvPropertiesConfiger;
+
 
 /**
  * 下载2010

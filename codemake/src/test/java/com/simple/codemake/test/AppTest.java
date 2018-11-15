@@ -54,16 +54,16 @@ public class AppTest
 			String project = "shouhou";
 			String db = "shouhou";
 			//生成项目文件,需要该db下有sys_permission，sys_role,sys_role_permission,sys_user_role,user_info
-			codeMake.makeProjectFile(project, db);
+			//codeMake.makeProjectFile(project, db);
 			
 //			//生成数据库下所有的表
-			codeMake.make(project, db, true, null);
+			//codeMake.make(project, db, true, null);
 			
 //			生成数据库下某些表
-//			List<String> tables = new ArrayList<String>();
-//			tables.add("teamDevelopment");
-//			tables.add("sys_role");
-//			codeMake.make(project, db, false, tables);
+			List<String> tables = new ArrayList<String>();
+			tables.add("shouhou_bujian");
+			//tables.add("sys_role");
+			codeMake.make(project, db, false, tables);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
