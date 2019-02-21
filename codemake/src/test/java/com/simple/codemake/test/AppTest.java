@@ -63,7 +63,7 @@ public class AppTest
 			List<String> tables = new ArrayList<String>();
 			tables.add("shouhou_bujian");
 			//tables.add("sys_role");
-			codeMake.make(project, db, false, tables);
+			//codeMake.make(project, db, false, tables);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
