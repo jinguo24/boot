@@ -219,16 +219,15 @@ public class ReadExcel {
 	    	}
         	
 	    	//对比看看是不是int
-	    	DecimalFormat df = new DecimalFormat("0");  
-	    	result = df.format(cell.getNumericCellValue()); 
-        	/**
+	    	//DecimalFormat df = new DecimalFormat("0");  
+	    	//result = df.format(cell.getNumericCellValue()); 
 	    	double value = cell.getNumericCellValue();
         	int ivalue = (int)value;
         	if (value == ivalue) {
         		result = String.valueOf(ivalue);
         	}else {
         		result = String.valueOf(value);
-        	}*/
+        	}
         	/**
         	try {
 	        	CellStyle style = cell.getCellStyle();  
